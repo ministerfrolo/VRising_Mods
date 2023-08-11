@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>DropNonTeleportables</AssemblyName>
+    <Description>Allows you to drop all items that can't be teleported</Description>
+    <Version>0.0.1</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <PackageProjectUrl></PackageProjectUrl>
+    <GamePath>C:\Program Files (x86)\Steam\steamapps\common\VRising</GamePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="VRising.Bloodstone" Version="0.1.4" />
+    <PackageReference Include="VRising.Unhollowed.Client" Version="0.6.5.57575090" />
+    <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" />
+    <PackageReference Include="VRising.VampireCommandFramework" Version="0.8.*" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\Manifest.props" />
+
+  <Target Name="CopyPackageFiles" AfterTargets="Build">
+    <Copy ContinueOnError="true" SourceFiles="$(TargetDir)$(ProjectName).dll;$(IntermediateOutputPath)manifest.json;$(SolutionDir)icon.jpg;$(SolutionDir)README.md" DestinationFolder="$(SolutionDir)package" />
+    <Message Text="Copied build files to package directory" Importance="High" />
+  </Target>
+
+</Project>
