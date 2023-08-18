@@ -20,24 +20,12 @@ namespace DropNonTeleportables
         public static Keybinding configKeybinding;
         private Harmony _hooks;
 
-        private static void InitConfig()
-        {
-            configKeybinding = KeybindManager.Register(new()
-            {
-                Id = "ministerfrolo.vrisingmods.dropnonteleportables",
-                Category = "DropNonTeleportables",
-                Name = "Drop",
-                DefaultKeybinding = KeyCode.G,
-            });
-        }
-
         public override void Load()
         {
             Logger = Log;
             VCF = IL2CPPChainloader.Instance.Plugins.ContainsKey("gg.deca.VampireCommandFramework");
             Logger.LogInfo($"***** VCF : {VCF}");
 
-            InitConfig();
             if (VCFWrapper.Enabled) VCFWrapper.RegisterAll();
             DropNonTeleportablesClient.Reset();
 

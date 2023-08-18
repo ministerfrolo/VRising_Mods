@@ -17,24 +17,23 @@ namespace DropNonTeleportables
             _lastDropTime = DateTime.Now;
         }
 
-        public static void HandleInput(GameplayInputSystem __instance)
+        public static void TryDropTeleportBoundItems()
         {
+            Plugin.Logger.LogInfo("Doing Checks");
             if (!VWorld.IsClient)
             {
                 return;
             }
-
-            if ((Input.GetKeyInt(Plugin.configKeybinding.Primary) || Input.GetKeyInt(Plugin.configKeybinding.Secondary)) && DateTime.Now - _lastDropTime > TimeSpan.FromSeconds(0.5))
-            {
-                _lastDropTime = DateTime.Now;
-                Plugin.Logger.LogInfo("You pressed me!");
-                Plugin.Logger.LogInfo(VWorld.Client.IsServerWorld());
-                DropItems();
-            }
+            
+            _lastDropTime = DateTime.Now;
+            Plugin.Logger.LogInfo("You pressed me!");
+            Plugin.Logger.LogInfo(VWorld.Client.IsServerWorld());
+            DropItems();
         }
 
         private static void DropItems()
         {
+            Plugin.Logger.LogInfo("Trying to drop items");
             var entityManager = VWorld.Client.EntityManager;
             var gameDataSystem = VWorld.Server.GetExistingSystem<GameDataSystem>();
             var clientGameManager = VWorld.Client.GetExistingSystem<ClientScriptMapper>()._ClientGameManager;
