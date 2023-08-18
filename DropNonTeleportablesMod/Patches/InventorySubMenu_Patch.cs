@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 
 namespace DropNonTeleportables
 {
@@ -19,15 +20,26 @@ namespace DropNonTeleportables
         {
             Plugin.Logger.LogInfo("instance name is " + __instance.name);
             var testButtonName = "test button";
-            var smartMergeButton = AccessTools.FieldRefAccess<InventorySubMenu, SimpleStunButton>(__instance, "SmartMergeButton").gameObject;
+            SimpleStunButton smartMergeButton = null;
+            foreach(var stunButton in __instance.GetComponentsInChildren<SimpleStunButton>(true).Where(stunButton => stunButton.name == "SmartMergeButton"))
+            {
+                smartMergeButton = stunButton;
+            }
+            Plugin.Logger.LogInfo("smartMergeButton is " + smartMergeButton.name);
+            var smartMergeButtonGO = smartMergeButton.gameObject;
+            Plugin.Logger.LogInfo("smartMergeButtonGO is " + smartMergeButtonGO.name);
             var buttonContainer = smartMergeButton.transform.parent.gameObject;
+            Plugin.Logger.LogInfo("buttonContainer is " + buttonContainer.name);
             var testButton = buttonContainer.transform.Find(testButtonName)?.gameObject;
             if (testButton == null)
             {
-                //testButton = CloneButton(testButtonName, smartMergeButton.gameObject);
-                testButton = GameObject.Instantiate(smartMergeButton);
+                Plugin.Logger.LogInfo("testButton was null");
+                testButton = GameObject.Instantiate(smartMergeButtonGO);
+                testButton.name = "Drop Teleport Bound";
+                var textComp = testButton.GetComponentInChildren<TextMeshProUGUI>().text = "Drop Teleport Bound";
+                testButton.SetActive(true);
                 testButton.GetComponent<SimpleStunButton>().onClick.AddListener((UnityAction)Blargmerp);
-                testButton.transform.parent = buttonContainer.transform;
+                testButton.transform.SetParent(buttonContainer.transform);
             }
             
             //var blarg = new SimpleStunButton.ButtonClickedEvent();
