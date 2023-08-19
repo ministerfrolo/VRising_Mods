@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DropNonTeleportables", "DropNonTeleportables.csproj", "{DBB10E32-F2F7-4DB3-A2D3-E0E4748A2CC6}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -30,5 +27,8 @@ Global
 		{DBB10E32-F2F7-4DB3-A2D3-E0E4748A2CC6}.Release|x64.Build.0 = Release|Any CPU
 		{DBB10E32-F2F7-4DB3-A2D3-E0E4748A2CC6}.Release|x86.ActiveCfg = Release|Any CPU
 		{DBB10E32-F2F7-4DB3-A2D3-E0E4748A2CC6}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

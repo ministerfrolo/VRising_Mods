@@ -3,8 +3,9 @@ using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using System.Reflection;
-using UnityEngine;
 using Bloodstone.API;
+using VampireCommandFramework;
+
 
 namespace DropNonTeleportables
 {
@@ -26,7 +27,7 @@ namespace DropNonTeleportables
             VCF = IL2CPPChainloader.Instance.Plugins.ContainsKey("gg.deca.VampireCommandFramework");
             Logger.LogInfo($"***** VCF : {VCF}");
 
-            if (VCFWrapper.Enabled) VCFWrapper.RegisterAll();
+            CommandRegistry.RegisterAll();
             DropNonTeleportablesClient.Reset();
 
             _hooks = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
