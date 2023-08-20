@@ -24,5 +24,6 @@ None necessary
 `1.0.0`
 - First release on Thunderstore
 - Keybinding changed to button in inventory
+
 `0.0.1`
 - Initial mod upload
