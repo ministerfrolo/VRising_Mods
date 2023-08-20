@@ -7,7 +7,7 @@ using Bloodstone.API;
 using VampireCommandFramework;
 
 
-namespace DropNonTeleportables
+namespace DropTeleportBound
 {
     [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
     [BepInDependency("gg.deca.Bloodstone")]
@@ -16,19 +16,18 @@ namespace DropNonTeleportables
     public class Plugin : BasePlugin
     {
         public static ManualLogSource Logger;
-        public static bool VCF;
 
-        public static Keybinding configKeybinding;
         private Harmony _hooks;
 
         public override void Load()
         {
             Logger = Log;
-            VCF = IL2CPPChainloader.Instance.Plugins.ContainsKey("gg.deca.VampireCommandFramework");
-            Logger.LogInfo($"***** VCF : {VCF}");
 
+            // Actually load plugin
             CommandRegistry.RegisterAll();
-            DropNonTeleportablesClient.Reset();
+
+            // Set up drop button timing
+            DropTeleportBoundClient.Reset();
 
             _hooks = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
 
@@ -38,7 +37,6 @@ namespace DropNonTeleportables
         public override bool Unload()
         {
             Config.Clear();
-            KeybindManager.Unregister(configKeybinding);
             _hooks.UnpatchSelf();
             return true;
         }

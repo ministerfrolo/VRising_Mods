@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>DropNonTeleportables</AssemblyName>
-    <Description>Allows you to drop all items that can't be teleported</Description>
-    <Version>0.0.1</Version>
+    <AssemblyName>DropTeleportBound</AssemblyName>
+    <Description>Allows you to drop all items that can't be teleported or only items that can be teleported</Description>
+    <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/ministerfrolo/VRising_Mods/tree/master/DropTeleportBoundMod</PackageProjectUrl>
     <GamePath>C:\Program Files (x86)\Steam\steamapps\common\VRising</GamePath>
   </PropertyGroup>
 

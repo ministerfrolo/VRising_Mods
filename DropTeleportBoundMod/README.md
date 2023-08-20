@@ -7,7 +7,7 @@ A VRising mod that allows you to drop all items in all your inventories that can
 
 
 ### Configuration
-The keybinding can be changed in the controls menu while in game.
+None necessary
 
 ### Contributors 
 - MinisterFrolo: `Frolo` on Discord
