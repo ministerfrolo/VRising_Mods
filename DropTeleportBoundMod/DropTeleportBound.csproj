@@ -22,7 +22,7 @@
   <Import Project="$(MSBuildProjectDirectory)\Manifest.props" />
 
   <Target Name="CopyPackageFiles" AfterTargets="Build">
-    <Copy ContinueOnError="true" SourceFiles="$(TargetDir)$(ProjectName).dll;$(IntermediateOutputPath)manifest.json;$(SolutionDir)icon.jpg;$(SolutionDir)README.md" DestinationFolder="$(SolutionDir)package" />
+    <Copy ContinueOnError="true" SourceFiles="$(TargetDir)$(ProjectName).dll;$(IntermediateOutputPath)manifest.json;$(SolutionDir)icon.png;$(SolutionDir)README.md" DestinationFolder="$(SolutionDir)package" />
     <Message Text="Copied build files to package directory" Importance="High" />
   </Target>
 
