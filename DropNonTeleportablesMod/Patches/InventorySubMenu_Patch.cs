@@ -4,8 +4,6 @@ using UnityEngine.Events;
 using TMPro;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.UI;
-using UnityEngine.TextCore;
 
 namespace DropNonTeleportables
 {
@@ -38,19 +36,51 @@ namespace DropNonTeleportables
                 testButtonGO.name = testButtonName;
                 var textComp = testButtonGO.GetComponentInChildren<TextMeshProUGUI>().text = "Drop Teleport\nBound";
                 var testStunButton = testButtonGO.GetComponent<SimpleStunButton>();
-                testStunButton.onClick.AddListener((UnityAction)ClickedDropTeleportBoundItems);
+                testStunButton.name = "DropTeleportBound";
+                testStunButton.onClick.AddListener((UnityAction)Clicked_DropTeleportBoundItems);
                 testButtonGO.transform.SetParent(testButtonParent.transform);
                 testButtonGO.transform.SetAsLastSibling();
                 var buttonRectTransform = testButtonGO.GetComponent<RectTransform>();
                 buttonRectTransform.SetAsLastSibling();
-                var buttonHorizontalLayoutGroup = testButtonGO.GetComponent<HorizontalLayoutGroup>();
                 buttonRectTransform.SetPivot(PivotPresets.MiddleLeft);
             }
         }
 
-        private static void ClickedDropTeleportBoundItems() 
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(InventorySubMenu), nameof(InventorySubMenu.OnUpdateFromParent))]
+        private static void OnUpdateFromParent(InventorySubMenu __instance)
         {
-            DropNonTeleportablesClient.TryDropTeleportBoundItems();
+            SimpleStunButton dropTeleportBoundButton = null;
+            foreach(var stunButton in __instance.GetComponentsInChildren<SimpleStunButton>(true).Where(stunButton => stunButton.name == "DropTeleportBound"))
+            {
+                dropTeleportBoundButton = stunButton;
+            }
+            
+            if (Input.GetMouseButton(1))
+            {
+                if (dropTeleportBoundButton != null)
+                {
+                    dropTeleportBoundButton.GetComponentInChildren<TextMeshProUGUI>().text = "Drop Other\nItems";
+                }
+            }
+            else
+            {
+                dropTeleportBoundButton.GetComponentInChildren<TextMeshProUGUI>().text = "Drop Teleport\nBound";
+            }
         }
+
+        private static void Clicked_DropTeleportBoundItems() 
+        {
+            if (!Input.GetMouseButton(1))
+            {
+                DropNonTeleportablesClient.TryDropTeleportBoundItems(false);
+            } 
+            else
+            {
+                DropNonTeleportablesClient.TryDropTeleportBoundItems(true);
+            }
+        }
+
+        
     }
 }

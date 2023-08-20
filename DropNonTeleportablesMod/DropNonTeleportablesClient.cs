@@ -17,21 +17,21 @@ namespace DropNonTeleportables
             _lastDropTime = DateTime.Now;
         }
 
-        public static void TryDropTeleportBoundItems()
+        public static void TryDropTeleportBoundItems(bool reverse)
         {
             Plugin.Logger.LogInfo("Doing Checks");
             if (!VWorld.IsClient)
             {
                 return;
             }
-            
+
             _lastDropTime = DateTime.Now;
             Plugin.Logger.LogInfo("You pressed me!");
             Plugin.Logger.LogInfo(VWorld.Client.IsServerWorld());
-            DropItems();
+            DropItems(reverse);
         }
 
-        private static void DropItems()
+        private static void DropItems(bool reverse)
         {
             Plugin.Logger.LogInfo("Trying to drop items");
             var entityManager = VWorld.Client.EntityManager;
@@ -44,10 +44,11 @@ namespace DropNonTeleportables
             InventoryUtilities.TryGetInventoryEntities(entityManager, localCharacter, ref inventoryEntities);
             foreach (var inventoryEntity in inventoryEntities)
             {
-                if(!InventoryUtilities.HasItemOfCategory(entityManager, itemInfoStuff, inventoryEntity, ItemCategory.TeleportBound))
+                if(!reverse && !InventoryUtilities.HasItemOfCategory(entityManager, itemInfoStuff, inventoryEntity, ItemCategory.TeleportBound))
                 {
                     return;
                 }
+                Plugin.Logger.LogInfo("blarginmerp");
 
                 InventoryUtilities._TryGetInventoryFromInventoryEntity(entityManager, inventoryEntity, out NativeArray<InventoryBuffer> inventory);
                 for (int i=0; i < inventory.Length; i++) 
@@ -57,9 +58,13 @@ namespace DropNonTeleportables
                         continue;
                     }
 
-                    if (itemInfoStuff[item.ItemType].ItemCategory.ToString().Contains(ItemCategory.TeleportBound.ToString()))
+                    if (reverse ^ itemInfoStuff[item.ItemType].ItemCategory.ToString().Contains(ItemCategory.TeleportBound.ToString()))
                     {
-                        EventHelper.TryDropInventoryItem(entityManager, inventoryEntity, i);
+                        if (!itemInfoStuff[item.ItemType].ItemCategory.ToString().Contains(ItemCategory.Weapon.ToString()) 
+                                && !itemInfoStuff[item.ItemType].ItemCategory.ToString().Contains(ItemCategory.Armor.ToString()))
+                        {
+                            EventHelper.TryDropInventoryItem(entityManager, inventoryEntity, i);
+                        }
                     }
                 }     
 
