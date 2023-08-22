@@ -5,9 +5,13 @@ A VRising mod that allows you to drop all items in all your inventories that can
 - Client-side mod. No need for server install.
 - Only tested using Thunderstore mod and R2ModMan local import.
 
-
 ### Configuration
 None necessary
+
+### How to use in-game
+- Left-Click: drop teleport bound items
+- Hold Right Mouse Button, then Press Left-Click: drop everything else (except weapons and armor)
+    - The button text will change when right mouse button is held down
 
 ### Contributors 
 - MinisterFrolo: `Frolo` on Discord
